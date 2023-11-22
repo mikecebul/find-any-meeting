@@ -5,7 +5,7 @@ module.exports = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
-    "./_components/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
@@ -19,7 +19,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["var(--font-inter)"],
       },
       colors: {
         border: "hsl(var(--border))",

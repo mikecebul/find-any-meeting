@@ -1,6 +1,6 @@
 "use client";
 
-import { Label } from "@/_components/ui/label";
+import { Label } from "@/components/ui/label";
 import {
   SelectValue,
   SelectTrigger,
@@ -8,16 +8,16 @@ import {
   SelectGroup,
   SelectContent,
   Select,
-} from "@/_components/ui/select";
-import { Input } from "@/_components/ui/input";
-import { Button } from "@/_components/ui/button";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   DialogTrigger,
   DialogFooter,
   DialogContent,
   Dialog,
-} from "@/_components/ui/dialog";
-import GoogleMap from "@/_components/google-map";
+} from "@/components/ui/dialog";
+import GoogleMap from "@/components/google-map";
 
 export default function Component() {
   return (
