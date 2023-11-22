@@ -1,7 +1,5 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/Ov61LDgkvma
- */
+"use client";
+
 import { Label } from "@/_components/ui/label";
 import {
   SelectValue,
@@ -19,19 +17,18 @@ import {
   DialogContent,
   Dialog,
 } from "@/_components/ui/dialog";
-import SimpleMap from "@/_components/simple-map";
+import GoogleMap from "@/_components/google-map";
 
 export default function Component() {
   return (
     <main className="w-full h-[100svh] relative">
       <div className="hidden lg:block absolute inset-0">
-        <SimpleMap />
+        <GoogleMap />
       </div>
-      <div className="relative lg:h-screen">
-        <aside className="hidden lg:block absolute top-0 left-0 p-4 lg:w-64 lg:h-full bg-white shadow-lg lg:static lg:shadow-none lg:bg-transparent lg:p-0 z-10">
-          <Search />
-        </aside>
-        <div className="lg:hidden py-8">
+      <aside className="hidden lg:block absolute top-0 left-0 p-4 lg:w-64 lg:h-full bg-white shadow-lg lg:shadow-none lg:bg-transparent lg:p-0 z-10">
+        <Search />
+      </aside>
+      {/* <div className="lg:hidden py-8">
           <Dialog>
             <DialogTrigger className="w-full">
               <Button>Open Search Menu</Button>
@@ -58,8 +55,7 @@ export default function Component() {
               <p className="text-sm text-gray-500">Meeting details...</p>
             </li>
           </ul>
-        </div>
-      </div>
+        </div> */}
     </main>
   );
 }
