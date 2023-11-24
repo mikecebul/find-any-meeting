@@ -6,7 +6,7 @@ import { ModeToggle } from "./mode-toggle";
 export function Header() {
   return (
     <header className="flex w-full">
-      <div className="flex items-center justify-between w-full px-4 md:px-8 2xl:px-0 2xl:container h-14 lg:h-20">
+      <div className="flex items-center justify-between w-full pr-10 pl-4 lg:container lg:pr-14 h-14 lg:h-20">
         <Link
           href="/"
           className={cn(
