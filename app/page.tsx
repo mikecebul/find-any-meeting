@@ -1,4 +1,5 @@
 import GoogleMap from "@/components/google-map";
+import { Header } from "@/components/header";
 
 async function getData() {
   const res = await fetch(
@@ -17,7 +18,8 @@ async function getData() {
 export default async function Component() {
   const data = await getData();
   return (
-    <main className="w-full h-[100svh]">
+    <main className="flex flex-col h-full w-full">
+      <Header />
       <GoogleMap data={data} />
     </main>
   );

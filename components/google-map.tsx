@@ -72,7 +72,7 @@ export default function GoogleMap({ data }: { data: Root }) {
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
-      <div className="w-full h-[100svh]">
+      <div className="grow">
         <Map zoom={9} center={position} mapId={process.env.NEXT_PUBLIC_MAP_ID}>
           {data.docs.map((doc, index) => (
             <AdvancedMarker
