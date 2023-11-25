@@ -2,10 +2,8 @@ import GoogleMap from "@/components/google-map";
 import { Header } from "@/components/header";
 
 async function getData() {
-  const res = await fetch(
-    "https://fam-payload-production.up.railway.app/api/locations",
-    { next: { revalidate: 3600 } }
-  );
+  const API = process.env.NEXT_PUBLIC_API_URL;
+  const res = await fetch(`${API}/locations`, { next: { revalidate: 3600 } });
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
