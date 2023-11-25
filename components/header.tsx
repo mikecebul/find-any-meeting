@@ -19,7 +19,6 @@ export function Header() {
         >
           Find Any Meeting
         </Link>
-        <Button onClick={() => RevalidatePath()}>Refresh</Button>
         <ModeToggle />
       </div>
     </header>
