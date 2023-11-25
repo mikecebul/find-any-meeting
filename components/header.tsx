@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "./mode-toggle";
+import { RevalidatePath } from "@/actions/server";
 
 export function Header() {
   return (
@@ -16,6 +19,7 @@ export function Header() {
         >
           Find Any Meeting
         </Link>
+        <Button onClick={() => RevalidatePath()}>Refresh</Button>
         <ModeToggle />
       </div>
     </header>
