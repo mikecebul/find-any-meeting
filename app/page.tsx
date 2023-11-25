@@ -3,7 +3,7 @@ import { Header } from "@/components/header";
 
 async function getData() {
   const API = process.env.NEXT_PUBLIC_API_URL;
-  const res = await fetch(`${API}/locations`, { next: { tags: ['locations']  } });
+  const res = await fetch(`${API}/locations`);
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
