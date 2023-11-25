@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   }
   if (path) {
     revalidatePath(path)
-    return Response.json({ revalidated: true, now: Date.now() })
+    return Response.json({ revalidated: true, path: path, now: Date.now() })
   }
  
   return Response.json({
