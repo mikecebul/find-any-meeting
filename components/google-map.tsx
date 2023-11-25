@@ -9,6 +9,7 @@ import {
   InfoWindow,
 } from "@vis.gl/react-google-maps";
 import { format } from "date-fns";
+import { MeetingList } from "./meeting-list";
 
 export interface Root {
   docs: Doc[];
@@ -45,6 +46,7 @@ export interface Meeting {
 export interface Meeting2 {
   pathway: string;
   group: string;
+  details: string;
   type: string;
   dayAndTime: DayAndTime;
 }
@@ -60,10 +62,10 @@ export default function GoogleMap({ data }: { data: Root }) {
     lat: 45.3156822,
     lng: -85.2600135,
   };
-  const [selectedLocation, setSelectedLocation] = useState<Doc | null>(null);
+  const [selectedDoc, setselectedDoc] = useState<Doc | null>(null);
 
   const handleMarkerClick = (doc: Doc) => {
-    setSelectedLocation(doc);
+    setselectedDoc(doc);
   };
 
   function convertPositionToArray(position: number[]) {
@@ -80,46 +82,15 @@ export default function GoogleMap({ data }: { data: Root }) {
               position={convertPositionToArray(doc.location.position)}
               onClick={() => handleMarkerClick(doc)}
             >
-              <Pin
-              // background={"grey"}
-              // borderColor={"white"}
-              // glyphColor={"white"}
-              />
+              <Pin />
             </AdvancedMarker>
           ))}
-          {!!selectedLocation && (
+          {!!selectedDoc && (
             <InfoWindow
-              position={convertPositionToArray(
-                selectedLocation.location.position
-              )}
-              onCloseClick={() => setSelectedLocation(null)}
+              position={convertPositionToArray(selectedDoc.location.position)}
+              onCloseClick={() => setselectedDoc(null)}
             >
-              <div>
-                <p className="text-black font-bold text-2xl">
-                  {selectedLocation.name}
-                </p>
-                <p className="text-black text-base">
-                  {selectedLocation.location.address}
-                </p>
-                <div className="w-full h-1 bg-slate-950 mb-2 rounded-full"></div>
-                <ul>
-                  {selectedLocation.meetings
-                    .filter(({ meeting }) => meeting.type !== "Zoom")
-                    .map(({ meeting }, index) => (
-                      <li key={index} className="text-black text-base">
-                        <span className="capitalize">
-                          {meeting.dayAndTime.dayOfWeek}{" "}
-                        </span>
-                        at{" "}
-                        {format(
-                          new Date(meeting.dayAndTime.timeOnly),
-                          "h:mm a"
-                        )}{" "}
-                        - <span className="uppercase">{meeting.pathway}</span>
-                      </li>
-                    ))}
-                </ul>
-              </div>
+              <MeetingList doc={selectedDoc} />
             </InfoWindow>
           )}
         </Map>
