@@ -1,8 +1,6 @@
 import GoogleMap from "@/components/google-map";
 import { Header } from "@/components/header";
 
-const dynamic = "force-dynamic";
-
 async function getData() {
   const API = process.env.NEXT_PUBLIC_API_URL;
   const res = await fetch(`${API}/locations`);

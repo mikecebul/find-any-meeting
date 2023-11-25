@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { revalidatePath } from "next/cache";
+import { RevalidatePath } from "@/actions/server";
 
 export async function GET(request: NextRequest) {
   // const secret = request.nextUrl.searchParams.get("secret");
@@ -11,8 +12,9 @@ export async function GET(request: NextRequest) {
   //   return new Response("Invalid secret", { status: 401 });
   // }
   // if (path) {
-    revalidatePath(path || '/');
-    return Response.json({ revalidated: true, path: path || '/', now: Date.now() });
+    // revalidatePath(path || '/');
+    RevalidatePath()
+    return Response.json({ revalidated: true, path: '/', now: Date.now() });
   // }
 
   // return Response.json({
