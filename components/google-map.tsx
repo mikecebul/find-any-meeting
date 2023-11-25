@@ -8,7 +8,6 @@ import {
   Pin,
   InfoWindow,
 } from "@vis.gl/react-google-maps";
-import { format } from "date-fns";
 import { MeetingList } from "./meeting-list";
 
 export interface Root {
@@ -72,18 +71,22 @@ export default function GoogleMap({ data }: { data: Root }) {
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
       <div className="grow">
         <Map zoom={9} center={position} mapId={process.env.NEXT_PUBLIC_MAP_ID}>
-          {data.docs.map((doc, index) => (
-            <AdvancedMarker
-              key={index}
-              position={convertPositionToArray(doc.position)}
-              onClick={() => handleMarkerClick(doc)}
-            >
-              <Pin />
-            </AdvancedMarker>
-          ))}
+          {data.docs
+            .filter((doc) => !!doc.position)
+            .map((doc, index) => (
+              <AdvancedMarker
+                key={index}
+                position={convertPositionToArray(doc.position)}
+                onClick={() => handleMarkerClick(doc)}
+              >
+                <Pin />
+              </AdvancedMarker>
+            ))}
           {!!selectedDoc && (
             <InfoWindow
-              position={convertPositionToArray(selectedDoc.position)}
+              position={
+                convertPositionToArray(selectedDoc.position) || position
+              }
               onCloseClick={() => setselectedDoc(null)}
             >
               <MeetingList doc={selectedDoc} />
