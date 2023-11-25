@@ -1,5 +1,8 @@
 "use client";
 
+
+const dynamic = "force-dynamic";
+
 import { useState } from "react";
 import {
   APIProvider,
