@@ -17,15 +17,11 @@ interface MeetingListProps extends CardProps {
 export interface Doc {
   id: string;
   name: string;
-  location: Location;
+  address: string;
+  position: number[];
   meetings: Meeting[];
   createdAt: string;
   updatedAt: string;
-}
-
-export interface Location {
-  address: string;
-  position: number[];
 }
 
 export interface Meeting {
@@ -52,7 +48,7 @@ export function MeetingList({ doc, className, ...props }: MeetingListProps) {
     <Card className={cn("w-[380px]", className)} {...props}>
       <CardHeader>
         <CardTitle>{doc.name}</CardTitle>
-        <CardDescription>{doc.location.address}.</CardDescription>
+        <CardDescription>{doc.address}.</CardDescription>
       </CardHeader>
       <CardContent className="">
         {doc.meetings.map(({ meeting }, index) => (

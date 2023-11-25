@@ -27,15 +27,11 @@ export interface Root {
 export interface Doc {
   id: string;
   name: string;
-  location: Location;
+  address: string;
+  position: number[];
   meetings: Meeting[];
   createdAt: string;
   updatedAt: string;
-}
-
-export interface Location {
-  address: string;
-  position: number[];
 }
 
 export interface Meeting {
@@ -79,7 +75,7 @@ export default function GoogleMap({ data }: { data: Root }) {
           {data.docs.map((doc, index) => (
             <AdvancedMarker
               key={index}
-              position={convertPositionToArray(doc.location.position)}
+              position={convertPositionToArray(doc.position)}
               onClick={() => handleMarkerClick(doc)}
             >
               <Pin />
@@ -87,7 +83,7 @@ export default function GoogleMap({ data }: { data: Root }) {
           ))}
           {!!selectedDoc && (
             <InfoWindow
-              position={convertPositionToArray(selectedDoc.location.position)}
+              position={convertPositionToArray(selectedDoc.position)}
               onCloseClick={() => setselectedDoc(null)}
             >
               <MeetingList doc={selectedDoc} />
