@@ -12,8 +12,8 @@ export async function GET(request: NextRequest) {
   //   return new Response("Invalid secret", { status: 401 });
   // }
   // if (path) {
-    // revalidatePath(path || '/');
-    RevalidatePath()
+    revalidatePath(path || '/');
+    // RevalidatePath()
     return Response.json({ revalidated: true, path: '/', now: Date.now() });
   // }
 
