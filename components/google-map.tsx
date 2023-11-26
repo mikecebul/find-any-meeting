@@ -9,58 +9,19 @@ import {
   InfoWindow,
 } from "@vis.gl/react-google-maps";
 import { MeetingList } from "./meeting-list";
+import { Location } from "@/types/payload-types";
 
-export interface Root {
-  docs: Doc[];
-  totalDocs: number;
-  limit: number;
-  totalPages: number;
-  page: number;
-  pagingCounter: number;
-  hasPrevPage: boolean;
-  hasNextPage: boolean;
-  prevPage: any;
-  nextPage: any;
-}
-
-export interface Doc {
-  id: string;
-  name: string;
-  address: string;
-  position: number[];
-  meetings: Meeting[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Meeting {
-  meeting: Meeting2;
-  id: string;
-}
-
-export interface Meeting2 {
-  pathway: string;
-  group: string;
-  details: string;
-  type: string;
-  dayAndTime: DayAndTime;
-}
-
-export interface DayAndTime {
-  isRecurring: boolean;
-  dayOfWeek: string;
-  timeOnly: string;
-}
-
-export default function GoogleMap({ data }: { data: Root }) {
+export default function GoogleMap({ locations }: { locations: Location[] }) {
   const position = {
     lat: 45.3156822,
     lng: -85.2600135,
   };
-  const [selectedDoc, setselectedDoc] = useState<Doc | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
 
-  const handleMarkerClick = (doc: Doc) => {
-    setselectedDoc(doc);
+  const handleMarkerClick = (location: Location) => {
+    setSelectedLocation(location);
   };
 
   function convertPositionToArray(position: number[]) {
@@ -71,25 +32,25 @@ export default function GoogleMap({ data }: { data: Root }) {
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
       <div className="grow">
         <Map zoom={9} center={position} mapId={process.env.NEXT_PUBLIC_MAP_ID}>
-          {data.docs
-            .filter((doc) => !!doc.position)
-            .map((doc, index) => (
+          {locations
+            .filter((location) => !!location.position)
+            .map((location, index) => (
               <AdvancedMarker
                 key={index}
-                position={convertPositionToArray(doc.position)}
-                onClick={() => handleMarkerClick(doc)}
+                position={convertPositionToArray(location.position!)}
+                onClick={() => handleMarkerClick(location)}
               >
                 <Pin />
               </AdvancedMarker>
             ))}
-          {!!selectedDoc && (
+          {!!selectedLocation && (
             <InfoWindow
               position={
-                convertPositionToArray(selectedDoc.position) || position
+                convertPositionToArray(selectedLocation.position!) || position
               }
-              onCloseClick={() => setselectedDoc(null)}
+              onCloseClick={() => setSelectedLocation(null)}
             >
-              <MeetingList doc={selectedDoc} />
+              <MeetingList location={selectedLocation} />
             </InfoWindow>
           )}
         </Map>
