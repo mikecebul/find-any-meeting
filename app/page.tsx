@@ -16,8 +16,7 @@ async function getData() {
 export default async function Component() {
   const { docs } = await getData();
   return (
-    <main className="flex flex-col h-full w-full">
-      <Header />
+    <main className="grow ">
       <GoogleMap locations={docs} />
     </main>
   );

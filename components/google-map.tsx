@@ -35,41 +35,39 @@ export default function GoogleMap({ locations }: { locations: Location[] }) {
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
-      <div className="grow">
-        <Map
-          zoom={9}
-          center={position}
-          mapId={theme === "dark" ? darkMapId : lightMapId}
-          options={{
-            zoomControl: false,
-            mapTypeControl: false,
-            // streetViewControl: false,
-            fullscreenControl: false,
-          }}
-        >
-          {locations
-            .filter((location) => !!location.position)
-            .map((location, index) => (
-              <AdvancedMarker
-                key={index}
-                position={convertPositionToArray(location.position!)}
-                onClick={() => handleMarkerClick(location)}
-              >
-                <Pin />
-              </AdvancedMarker>
-            ))}
-          {!!selectedLocation && (
-            <InfoWindow
-              position={
-                convertPositionToArray(selectedLocation.position!) || position
-              }
-              onCloseClick={() => setSelectedLocation(null)}
+      <Map
+        zoom={9}
+        center={position}
+        mapId={theme === "dark" ? darkMapId : lightMapId}
+        options={{
+          zoomControl: false,
+          mapTypeControl: false,
+          // streetViewControl: false,
+          fullscreenControl: false,
+        }}
+      >
+        {locations
+          .filter((location) => !!location.position)
+          .map((location, index) => (
+            <AdvancedMarker
+              key={index}
+              position={convertPositionToArray(location.position!)}
+              onClick={() => handleMarkerClick(location)}
             >
-              <MeetingList location={selectedLocation} />
-            </InfoWindow>
-          )}
-        </Map>
-      </div>
+              <Pin />
+            </AdvancedMarker>
+          ))}
+        {!!selectedLocation && (
+          <InfoWindow
+            position={
+              convertPositionToArray(selectedLocation.position!) || position
+            }
+            onCloseClick={() => setSelectedLocation(null)}
+          >
+            <MeetingList location={selectedLocation} />
+          </InfoWindow>
+        )}
+      </Map>
     </APIProvider>
   );
 }
