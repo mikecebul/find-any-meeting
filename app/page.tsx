@@ -1,5 +1,4 @@
 import GoogleMap from "@/components/google-map";
-import { Header } from "@/components/header";
 
 async function getData() {
   const API = process.env.NEXT_PUBLIC_API_URL;
