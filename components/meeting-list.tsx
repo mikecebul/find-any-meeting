@@ -10,88 +10,124 @@ import { format } from "date-fns";
 import { Location } from "@/types/payload-types";
 import { ExternalLink } from "lucide-react";
 import { buttonVariants } from "./ui/button";
+import { ReactNode } from "react";
 
 type CardProps = React.ComponentProps<typeof Card>;
+
+type Meeting = NonNullable<Location["meetings"]>[number];
 
 interface MeetingListProps extends CardProps {
   location: Location;
 }
 
-export function MeetingList({
-  location,
-  className,
-  ...props
-}: MeetingListProps) {
+export function MeetingList({ location, ...props }: MeetingListProps) {
   return (
-    <Card className={cn(" maw-w-sm lg:w-96", className)} {...props}>
+    <Card className="min-w-fit" {...props}>
       <CardHeader>
         <CardTitle>{location.name}</CardTitle>
         <CardDescription>
           {`${location.street}, ${location.city}`}
         </CardDescription>
       </CardHeader>
-      <CardContent className="">
-        <p className="text-muted-foreground font-semibold pb-2 border-b mb-2 tracking-wider">
-          In Person
-        </p>
+      <CardContent>
+        {/* In Person and Hybrid Meetings */}
+        {location.meetings?.some(({ type }) => type !== "zoom") && (
+          <p className="text-muted-foreground font-semibold pb-2 border-b mb-4 tracking-wider">
+            In Person & Hybrid
+          </p>
+        )}
         {location.meetings
           ?.filter(({ type }) => type === "in-person" || type === "hybrid")
           .map((meeting, index) => (
-            <div key={index} className="flex items-center mb-5">
-              <span className="flex-shrink-0 mr-2 h-2 w-2 rounded-full bg-sky-500" />
-              <p className="text-sm font-medium">
-                <span className="capitalize">
-                  {meeting.dayOfWeek}
-                </span>{" "}
-                <span className="text-muted-foreground">at </span>
-                <span>
-                  {format(new Date(meeting.timeOnly), "h:mm a")} -
-                </span>{" "}
-                <span className="uppercase">{meeting.pathway}</span>
-                <span className="text-muted-foreground capitalize">
-                  {meeting.gender !== "coed" ? ` - ${meeting.gender}` : ""}
-                </span>
-              </p>
+            <div
+              key={index}
+              className={cn(
+                "flex items-center",
+                meeting.type === "hybrid" ? "-ml-4" : "mb-3"
+              )}
+            >
+              <ZoomLink meeting={meeting}>
+                <MeetingDetails meeting={meeting} />
+              </ZoomLink>
             </div>
           ))}
-        <p className="text-muted-foreground font-semibold pb-2 border-b mb-2 tracking-wider">
-          Zoom
-        </p>
+
+        {/* Zoom Only Meetings */}
+        {location.meetings?.some(({ type }) => type === "zoom") && (
+          <p className="text-muted-foreground font-semibold pb-2 border-b mb-2 mt-3 tracking-wider">
+            Zoom
+          </p>
+        )}
         {location.meetings
-          ?.filter(
-            ({ type }) =>
-              type === "zoom" || type === "hybrid"
-          )
+          ?.filter(({ type }) => type === "zoom" || type === "hybrid")
           .map((meeting, index) => (
             <div key={index} className="flex items-center -ml-4">
-              <a
-                href={meeting.zoomLink || "#"}
-                className={cn(
-                  buttonVariants({ variant: "ghost" }),
-                  "flex items-center"
-                )}
-              >
-                <span className="flex-shrink-0 mr-2 h-2 w-2 rounded-full bg-sky-500" />
-                <p className="text-sm font-medium">
-                  <span className="capitalize">
-                    {meeting.dayOfWeek}
-                  </span>{" "}
-                  <span className="text-muted-foreground">at </span>
-                  <span>
-                    {format(new Date(meeting.timeOnly), "h:mm a")} -
-                  </span>{" "}
-                  <span className="uppercase">{meeting.pathway}</span>
-                  <span className="text-muted-foreground capitalize">
-                    {meeting.gender !== "coed" ? ` - ${meeting.gender}` : ""}
-                  </span>
-                  <span className="inline-flex ml-2">
-                    <ExternalLink size={16} className="" />
-                  </span>
-                </p>
-              </a>
+              <ZoomLink meeting={meeting}>
+                <MeetingDetails meeting={meeting} />
+              </ZoomLink>
             </div>
           ))}
       </CardContent>
     </Card>
   );
+}
+
+function ZoomLink({
+  meeting,
+  children,
+}: {
+  meeting: Meeting;
+  children: ReactNode;
+}) {
+  if (meeting.type === "in-person") return children;
+  return (
+    <a
+      href={meeting.zoomLink || "#"}
+      className={cn(buttonVariants({ variant: "ghost" }), "flex items-center")}
+    >
+      {children}
+
+      <span className="inline-flex ml-2">
+        <ExternalLink size={16} className="" />
+      </span>
+    </a>
+  );
+}
+
+function MeetingDetails({ meeting }: { meeting: Meeting }) {
+  return (
+    <>
+      <span className="flex-shrink-0 mr-2 h-2 w-2 rounded-full bg-sky-500" />
+      <p className="text-sm font-medium">
+        <span className="capitalize">{meeting.dayOfWeek}</span>{" "}
+        <span className="text-muted-foreground">at </span>
+        <span>{format(new Date(meeting.timeOnly), "h:mm a")} -</span>{" "}
+        <span>{prettifyPathway(meeting.pathway)}</span>
+        <span className="text-muted-foreground capitalize">
+          {meeting.gender !== "coed" ? ` - ${meeting.gender}` : ""}
+        </span>
+      </p>
+    </>
+  );
+}
+
+function prettifyPathway(pathway: string) {
+  // Check for special cases with two-letter pathways
+  if (pathway.length === 2) {
+    return pathway.toUpperCase();
+  }
+
+  // Special handling for "al-anon" and "nar-anon"
+  if (pathway === "al-anon" || pathway === "nar-anon") {
+    return pathway
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("-");
+  }
+
+  // General case: replace hyphens with spaces and capitalize each word
+  return pathway
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
