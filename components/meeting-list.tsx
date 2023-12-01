@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { format } from "date-fns";
 import { Location } from "@/types/payload-types";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Ghost } from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import { ReactNode } from "react";
 
@@ -32,20 +32,14 @@ export function MeetingList({ location, ...props }: MeetingListProps) {
       <CardContent>
         {/* In Person and Hybrid Meetings */}
         {location.meetings?.some(({ type }) => type !== "zoom") && (
-          <p className="text-muted-foreground font-semibold pb-2 border-b mb-4 tracking-wider">
+          <p className="text-muted-foreground font-semibold pb-2 mb-2 border-b tracking-wider">
             In Person & Hybrid
           </p>
         )}
         {location.meetings
           ?.filter(({ type }) => type === "in-person" || type === "hybrid")
           .map((meeting, index) => (
-            <div
-              key={index}
-              className={cn(
-                "flex items-center",
-                meeting.type === "hybrid" ? "-ml-4" : "my-3"
-              )}
-            >
+            <div key={index} className={cn("flex items-center -ml-4")}>
               <ZoomLink meeting={meeting}>
                 <MeetingDetails meeting={meeting} />
               </ZoomLink>
@@ -79,7 +73,11 @@ function ZoomLink({
   meeting: Meeting;
   children: ReactNode;
 }) {
-  if (meeting.type === "in-person") return children;
+  if (meeting.type === "in-person")
+    return (
+      <div className={cn(buttonVariants({ variant: "blank" }))}>{children}</div>
+    );
+
   return (
     <a
       href={meeting.zoomLink || "#"}
