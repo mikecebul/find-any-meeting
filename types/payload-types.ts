@@ -108,31 +108,30 @@ export interface Location {
   position?: [number, number] | null;
   meetings?:
     | {
-        meeting: {
-          pathway:
-            | "aa"
-            | "na"
-            | "oa"
-            | "talking-circle"
-            | "dharma-recovery"
-            | "smart-recovery"
-            | "celebrate-recovery"
-            | "none";
-          gender: "coed" | "women" | "men";
-          type: "in-person" | "hybrid" | "zoom";
-          zoomLink?: string | null;
-          dayAndTime: {
-            dayOfWeek:
-              | "monday"
-              | "tuesday"
-              | "wednesday"
-              | "thursday"
-              | "friday"
-              | "saturday"
-              | "sunday";
-            timeOnly: string;
-          };
-        };
+        dayOfWeek:
+          | "monday"
+          | "tuesday"
+          | "wednesday"
+          | "thursday"
+          | "friday"
+          | "saturday"
+          | "sunday";
+        timeOnly: string;
+        pathway:
+          | "aa"
+          | "na"
+          | "oa"
+          | "al-anon"
+          | "nar-anon"
+          | "talking-circle"
+          | "all-recovery"
+          | "celebrate-recovery"
+          | "dharma-recovery"
+          | "smart-recovery"
+          | "other";
+        gender: "coed" | "women" | "men";
+        type: "in-person" | "hybrid" | "zoom";
+        zoomLink?: string | null;
         id?: string | null;
       }[]
     | null;

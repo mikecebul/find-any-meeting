@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -36,20 +35,17 @@ export function MeetingList({
           In Person
         </p>
         {location.meetings
-          ?.filter(
-            ({ meeting }) =>
-              meeting.type === "in-person" || meeting.type === "hybrid"
-          )
-          .map(({ meeting }, index) => (
+          ?.filter(({ type }) => type === "in-person" || type === "hybrid")
+          .map((meeting, index) => (
             <div key={index} className="flex items-center mb-5">
               <span className="flex-shrink-0 mr-2 h-2 w-2 rounded-full bg-sky-500" />
               <p className="text-sm font-medium">
                 <span className="capitalize">
-                  {meeting.dayAndTime.dayOfWeek}
+                  {meeting.dayOfWeek}
                 </span>{" "}
                 <span className="text-muted-foreground">at </span>
                 <span>
-                  {format(new Date(meeting.dayAndTime.timeOnly), "h:mm a")} -
+                  {format(new Date(meeting.timeOnly), "h:mm a")} -
                 </span>{" "}
                 <span className="uppercase">{meeting.pathway}</span>
                 <span className="text-muted-foreground capitalize">
@@ -63,10 +59,10 @@ export function MeetingList({
         </p>
         {location.meetings
           ?.filter(
-            ({ meeting }) =>
-              meeting.type === "zoom" || meeting.type === "hybrid"
+            ({ type }) =>
+              type === "zoom" || type === "hybrid"
           )
-          .map(({ meeting }, index) => (
+          .map((meeting, index) => (
             <div key={index} className="flex items-center -ml-4">
               <a
                 href={meeting.zoomLink || "#"}
@@ -78,11 +74,11 @@ export function MeetingList({
                 <span className="flex-shrink-0 mr-2 h-2 w-2 rounded-full bg-sky-500" />
                 <p className="text-sm font-medium">
                   <span className="capitalize">
-                    {meeting.dayAndTime.dayOfWeek}
+                    {meeting.dayOfWeek}
                   </span>{" "}
                   <span className="text-muted-foreground">at </span>
                   <span>
-                    {format(new Date(meeting.dayAndTime.timeOnly), "h:mm a")} -
+                    {format(new Date(meeting.timeOnly), "h:mm a")} -
                   </span>{" "}
                   <span className="uppercase">{meeting.pathway}</span>
                   <span className="text-muted-foreground capitalize">
