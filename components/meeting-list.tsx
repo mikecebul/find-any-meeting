@@ -43,7 +43,7 @@ export function MeetingList({ location, ...props }: MeetingListProps) {
               key={index}
               className={cn(
                 "flex items-center",
-                meeting.type === "hybrid" ? "-ml-4" : "mb-3"
+                meeting.type === "hybrid" ? "-ml-4" : "my-3"
               )}
             >
               <ZoomLink meeting={meeting}>
@@ -55,11 +55,11 @@ export function MeetingList({ location, ...props }: MeetingListProps) {
         {/* Zoom Only Meetings */}
         {location.meetings?.some(({ type }) => type === "zoom") && (
           <p className="text-muted-foreground font-semibold pb-2 border-b mb-2 mt-3 tracking-wider">
-            Zoom
+            Zoom Only
           </p>
         )}
         {location.meetings
-          ?.filter(({ type }) => type === "zoom" || type === "hybrid")
+          ?.filter(({ type }) => type === "zoom")
           .map((meeting, index) => (
             <div key={index} className="flex items-center -ml-4">
               <ZoomLink meeting={meeting}>
