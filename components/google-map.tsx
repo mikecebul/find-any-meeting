@@ -13,9 +13,10 @@ import { Location } from "@/types/payload-types";
 import { useTheme } from "next-themes";
 
 export default function GoogleMap({ locations }: { locations: Location[] }) {
-  const { theme } = useTheme();
-  const darkMapId = "e618145b0a0748c3";
-  const lightMapId = "1f318bfbce12c110";
+  const { theme, resolvedTheme } = useTheme();
+  const actualTheme = theme === "system" ? resolvedTheme : theme;
+  const darkMapId = process.env.NEXT_PUBLIC_MAP_DARK_ID;
+  const lightMapId = process.env.NEXT_PUBLIC_MAP_LIGHT_ID;
 
   const position = {
     lat: 45.3156822,
@@ -38,7 +39,7 @@ export default function GoogleMap({ locations }: { locations: Location[] }) {
       <Map
         zoom={9}
         center={position}
-        mapId={theme === "dark" ? darkMapId : lightMapId}
+        mapId={actualTheme === "dark" ? darkMapId : lightMapId}
         options={{
           zoomControl: false,
           mapTypeControl: false,
