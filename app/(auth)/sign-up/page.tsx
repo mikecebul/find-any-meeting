@@ -5,12 +5,10 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -22,14 +20,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
 
+type FormSchema = z.infer<typeof formSchema>;
+
 export default function Page() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const router = useRouter();
+  const { toast } = useToast();
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -37,8 +41,48 @@ export default function Page() {
     },
   });
 
-  function onSubmit() {
-    console.log("submited");
+  async function onSubmit(values: FormSchema) {
+    const API = process.env.NEXT_PUBLIC_API_URL;
+    console.log("Submitted!");
+    try {
+      const req = await fetch(`${API}/api/users`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await req.json();
+
+      if (req.status !== 200 && req.status !== 201) {
+        const errorMessage =
+          data.errors?.[0]?.data?.[0]?.message ?? "Please try again.";
+
+        toast({
+          variant: "destructive",
+          title: "Oops, something went wrong!",
+          description: errorMessage,
+        });
+        form.resetField("password");
+
+        return;
+      }
+      console.log(req.status);
+      toast({
+        variant: "success",
+        title: "Success!",
+        description: data.message,
+      });
+      form.reset();
+      router.push(`/verify-email?to=${values.email}`);
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Server Error!",
+        description: "Please try again.",
+      });
+      console.log("Error", err);
+    }
   }
 
   return (
@@ -73,7 +117,7 @@ export default function Page() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input placeholder="" type="password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

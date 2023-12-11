@@ -2,7 +2,7 @@ import GoogleMap from "@/components/google-map";
 
 async function getData() {
   const API = process.env.NEXT_PUBLIC_API_URL;
-  const res = await fetch(`${API}/locations`);
+  const res = await fetch(`${API}/api/locations`);
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
