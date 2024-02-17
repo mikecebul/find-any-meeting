@@ -50,12 +50,23 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-2 w-full">
         <XCircle className="h-8 w-8 text-red-600" />
         <h3 className="font-semibold text-xl">There was a problem</h3>
         <p className="text-muted-foreground text-sm">
           This token is not valid or might be expired. Please try again.
         </p>
+        <div className="pt-48 w-full text-center">
+          <p className="text-muted-foreground">
+            If you have already verified...
+          </p>
+          <Link
+            className={buttonVariants({ className: "mt-4" })}
+            href={`${process.env.NEXT_PUBLIC_API_URL}`}
+          >
+            Sign in
+          </Link>
+        </div>
       </div>
     );
   }
