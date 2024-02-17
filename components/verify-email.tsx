@@ -45,7 +45,8 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     };
 
     verifyEmail();
-  }, [token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isError) {
     return (
@@ -71,7 +72,10 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
         <p className="text-muted-foreground text-center mt-1">
           Thank you for verifying your email.
         </p>
-        <Link className={buttonVariants({ className: "mt-4" })} href={`${process.env.NEXT_PUBLIC_API_URL}`}>
+        <Link
+          className={buttonVariants({ className: "mt-4" })}
+          href={`${process.env.NEXT_PUBLIC_API_URL}`}
+        >
           Sign in
         </Link>
       </div>
