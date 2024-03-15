@@ -22,8 +22,11 @@ export default function Page() {
           A Call to Recovery Coaches and Supporters
         </h2>
         <p className="mt-2">
-          Our platform is committed to offering a comprehensive and up-to-date
-          meeting list that embraces all pathways to recovery.
+          We&apos;re looking for volunteers to maintain the meeting lists of
+          recovery support groups and what better people than resource brokers
+          like recovery coaches! The type of meetings we host are ever
+          expanding. Here is the list of meetings that fit the definition of a
+          recovery support group in our area.
         </p>
         <ul className="grid w-full grid-cols-1 sm:grid-cols-2 gap-4 font-medium list-disc list-inside lg:grid-cols-3 pt-8">
           <li>Narcotics Anonymous (NA)</li>
