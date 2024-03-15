@@ -37,6 +37,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
 
         const result = await response.json();
         setData(result);
+        console.log(result);
       } catch (error) {
         // setIsError(true);
       } finally {
