@@ -7,7 +7,7 @@ interface PageProps {
   };
 }
 
-const VerifyEmailPage = ({ searchParams }: PageProps) => {
+export default function Page({ searchParams }: PageProps) {
   const token = searchParams.token;
   const toEmail = searchParams.to;
 
@@ -47,6 +47,4 @@ const VerifyEmailPage = ({ searchParams }: PageProps) => {
       </div>
     </div>
   );
-};
-
-export default VerifyEmailPage;
+}

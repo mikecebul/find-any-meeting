@@ -61,6 +61,15 @@ function Menu() {
           >
             About
           </Link>
+          <Link
+            className="text-lg font-semibold hover:text-primary/80"
+            href="/sign-up"
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            Sign Up
+          </Link>
           <a
             className="text-lg font-semibold hover:text-primary/80"
             href="https://admin.fam.mikecebul.dev"
