@@ -3,7 +3,7 @@ export type Meeting = (typeof locations)[number]["meetings"][number];
 
 export const locations = [
   {
-    name: "Charlevoix Alano Club",
+    name: "Charlevoix Alano Club!",
     address: "106 Mason St, Charlevoix, MI 49720",
     position: {
       lat: 45.3156822,

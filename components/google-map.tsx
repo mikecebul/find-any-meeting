@@ -37,15 +37,10 @@ export default function GoogleMap({ locations }: { locations: Location[] }) {
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
       <Map
-        zoom={9}
-        center={position}
+        defaultZoom={9}
+        defaultCenter={position}
         mapId={actualTheme === "dark" ? darkMapId : lightMapId}
-        options={{
-          zoomControl: false,
-          mapTypeControl: false,
-          // streetViewControl: false,
-          fullscreenControl: false,
-        }}
+        disableDefaultUI={true}
       >
         {locations
           .filter((location) => !!location.position)
