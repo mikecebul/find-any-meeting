@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export default function Page() {
   return (
-    <div className="w-full py-12 lg:py-24 xl:py-32">
+    <div className="w-full py-8 lg:py-12">
       <div className="container flex flex-col">
         <div className="lg:pb-8">
           <p className="text-base font-semibold leading-7 text-muted-foreground max-w-prose">

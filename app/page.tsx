@@ -14,7 +14,7 @@ async function getData() {
 export default async function Component() {
   const { docs } = await getData();
   return (
-    <main className="grow ">
+    <main className="h-[90vh]">
       <GoogleMap locations={docs} />
     </main>
   );
