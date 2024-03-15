@@ -38,7 +38,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
         const result = await response.json();
         setData(result);
       } catch (error) {
-        setIsError(true);
+        // setIsError(true);
       } finally {
         setIsLoading(false);
       }
