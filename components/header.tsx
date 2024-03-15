@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export function Header() {
   return (
-    <header className="flex container items-center justify-between w-full xl:px-0 h-[10vh]">
+    <header className="flex container items-center justify-between w-full h-[10vh]">
       <Link href="/" className="text-2xl font-semibold hover:text-primary/80">
         Find Any Meeting
       </Link>
