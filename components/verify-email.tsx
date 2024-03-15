@@ -39,7 +39,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
         setData(result);
         console.log(result);
       } catch (error) {
-        // setIsError(true);
+        setIsError(true);
       } finally {
         setIsLoading(false);
       }
@@ -72,7 +72,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     );
   }
 
-  if (!!data) {
+  if (data !== "undefined") {
     console.log("Data:", data);
     return (
       <div className="flex h-full flex-col items-center justify-center">
